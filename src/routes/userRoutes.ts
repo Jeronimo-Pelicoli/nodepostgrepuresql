@@ -1,10 +1,9 @@
 import { Request, Response, Router } from "express";
-import { User } from "./model/User";
-import UserRepository from "./repositories/user.repository";
+import UserRepository from "../repositories/user.repository";
 
-const routes = Router();
+const userRoutes = Router();
 
-routes.get("/user", async(req: Request, res: Response) => {
+userRoutes.get("/user", async(req: Request, res: Response) => {
     try {
         const users = await UserRepository.findAllUsers();
 
@@ -14,7 +13,7 @@ routes.get("/user", async(req: Request, res: Response) => {
     }
 });
 
-routes.get("/user/byname/:name", async(req: Request, res: Response) => {
+userRoutes.get("/user/byname/:name", async(req: Request, res: Response) => {
     try {
         const { name } = req.params;
 
@@ -26,7 +25,7 @@ routes.get("/user/byname/:name", async(req: Request, res: Response) => {
     }
 });
 
-routes.get("/user/byid/:uuid", async(req: Request, res: Response) => {
+userRoutes.get("/user/byid/:uuid", async(req: Request, res: Response) => {
     try {
         const { uuid } = req.params;
 
@@ -38,7 +37,7 @@ routes.get("/user/byid/:uuid", async(req: Request, res: Response) => {
     }
 });
 
-routes.post("/user", async(req: Request, res: Response) => {
+userRoutes.post("/user", async(req: Request, res: Response) => {
     try {
         const newuser = req.body;
 
@@ -49,7 +48,7 @@ routes.post("/user", async(req: Request, res: Response) => {
         console.log(error);
     }
 })
-routes.put("/user", async(req: Request, res: Response) => {
+userRoutes.put("/user", async(req: Request, res: Response) => {
     try {
         const newuser = req.body;
         const users = await UserRepository.updateUser(newuser);
@@ -59,7 +58,7 @@ routes.put("/user", async(req: Request, res: Response) => {
         console.log(error)
     }
 })
-routes.delete("/user/:uuid", async(req: Request, res: Response) => {
+userRoutes.delete("/user/:uuid", async(req: Request, res: Response) => {
     try {
         const { uuid } = req.params;
         await UserRepository.deleteUser(uuid);
@@ -69,4 +68,4 @@ routes.delete("/user/:uuid", async(req: Request, res: Response) => {
     }
 })
 
-export { routes }
+export { userRoutes }

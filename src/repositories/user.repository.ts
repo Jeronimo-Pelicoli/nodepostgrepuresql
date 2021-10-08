@@ -19,6 +19,7 @@ class UserRepository {
         const [ user ] = rows;
         return user;
     }
+
     async findById(uuid: string): Promise<User> {
         const query = `SELECT uuid, username FROM application_user WHERE uuid= $1`;
         const values = [uuid];
@@ -26,6 +27,17 @@ class UserRepository {
         const { rows } = result;
         const [ user ] = rows;
         console.log(user)
+        return user;
+    }
+
+    async findByUsernameAndPassword(username: string, password: string): Promise<User> {
+        const query = `SELECT uuid, username FROM application_user WHERE username = $1 AND password = crypt($2, 'my_salt')`;
+        const values = [ username, password ];
+
+        const { rows } = await db.query<User>(query, values);
+
+        const [ user ] = rows;
+
         return user;
     }
 
