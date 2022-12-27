@@ -18,7 +18,7 @@ loginRoutes.post("/login", async (req: Request, res: Response) => {
         const { username, password } = req.body;
 
         const user = await userRepository.findByUsernameAndPassword(username, password);
-        
+
         if(!user) {
             throw new Error("authorization invalid");
         }

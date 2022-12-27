@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { request } from "http";
 import { verify } from "jsonwebtoken";
 
 
@@ -21,7 +20,7 @@ function jwtMiddleware(req: Request, res: Response, next: NextFunction) {
         }
 
         const { sub } = verify(token, 'my_secret_key') as IPayload
-        
+
         req.user_id = sub;
 
         return next();
